@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const typeEnum = [
-  "t-shirt",
+  "t_shirt",
   "shorts",
   "shirt",
   "pants",

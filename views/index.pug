@@ -2,4 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  
+  div(class='items_in_stock')
+    p #[strong Clothes:] !{clothes_count}
+    p #[strong Men's Clothes:] !{mens_clothes_count}
+    p #[strong Womens Clothes:] !{womens_clothes_count}
+    p #[strong T-Shirts:] !{t_shirt_clothes_count}
+    p #[strong Shorts:] !{shorts_clothes_count}
+    p #[strong Shirts:] !{shirt_clothes_count}
+    p #[strong Pants:] !{pants_clothes_count}
+    p #[strong Jackets:] !{jacket_clothes_count}
+    p #[strong Dresses:] !{dresses_clothes_count}
+    p #[strong Shoes:] !{shoes_clothes_count}
+    p #[strong Socks:] !{socks_clothes_count}
