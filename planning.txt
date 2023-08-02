@@ -1,0 +1,14 @@
+Clothing Item: {
+  Name, 
+  Gender, 
+  ClothingType,
+  Price,
+  Stock,
+  Url
+}
+
+ClothingType: {
+  Name,
+  Clothes,
+  Url
+}
