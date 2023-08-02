@@ -15,7 +15,6 @@ const typeEnum = [
 
 const TypeSchema = new Schema({
   name: { type: String, required: true, maxLength: 100, enum: typeEnum },
-  clothes: [{ type: Schema.Types.ObjectId, ref: "Item" }],
 });
 
 TypeSchema.virtual("url").get(function () {
