@@ -2,19 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const typeEnum = [
-  "t_shirt",
-  "shorts",
-  "shirt",
-  "pants",
-  "jacket",
-  "dresses",
-  "shoes",
-  "socks",
-];
-
 const TypeSchema = new Schema({
-  name: { type: String, required: true, maxLength: 100, enum: typeEnum },
+  name: { type: String, required: true, maxLength: 100},
 });
 
 TypeSchema.virtual("url").get(function () {

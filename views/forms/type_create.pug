@@ -1,0 +1,15 @@
+extends ../layout
+
+block content 
+  h1= title 
+
+  form(method='POST' action='')
+    div
+      label(for='name') Type:
+      input(type='text', placeholder='T-Shirt, Sweater, etc.' name='name' value=(undefined===type ? '' : type.name) required: true)
+    button(type='submit') Submit
+    
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

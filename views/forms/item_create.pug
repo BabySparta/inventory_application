@@ -1,0 +1,38 @@
+extends ../layout
+
+block content 
+  h1= title 
+
+  form(method='POST' action='')
+    div
+      label(for='title') Name:
+      input(type='text', placeholder='Name of item' name='title' required='true' value=(undefined===item ? '' : item.name))
+    div 
+      select(type='select', placeholder='Select Type' name='type' required='true')
+        for type in types
+          if item 
+            option(value=type.id selected=(type._id.toString()===item.type._id.toString() ? 'selected' : false)) #{type.name}
+          else 
+            option(value=type.id) #{type.name}
+    div 
+      select(type='select', placeholder='Select Gender' name='gender' required='true')
+        if item 
+          option(selected=(item.gender==='male' ? 'selected' : false)) male
+          option(selected=(item.gender==='female' ? 'selected' : false)) female
+          option(selected=(item.gender==='unisex' ? 'selected' : false)) unisex
+        else 
+          option male
+          option female
+          option unisex
+    div 
+      label(for='price') Price: 
+      input(type='number' placeholder='XX.XX' name='price' required='true' value=(undefined===item ? '' : item.price) step='0.01')     
+    div 
+      label(for='stock') Stock: 
+      input(type='number' name='stock' required='true' value=(undefined===item ? '' : item.stock) step='1.0')
+    button(type='submit') Submit
+    
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
