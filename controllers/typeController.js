@@ -21,12 +21,16 @@ exports.type_detail = asyncHandler(async (req, res, next) => {
     return next(err);
   }
 
-  res.render("detail/type_detail", { title: type.name, typeItems: typeItems });
+  res.render("detail/type_detail", {
+    title: type.name,
+    typeItems: typeItems,
+    type: type,
+  });
 });
 
 exports.type_create_get = asyncHandler(async (req, res, next) => {
   res.render("forms/type_create", { title: "Create clothing type" });
-})
+});
 
 exports.type_create_post = [
   body("name", "Type name must be at least 1 character")
@@ -37,7 +41,7 @@ exports.type_create_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
-    const type = new Type({ name: req.body.name })
+    const type = new Type({ name: req.body.name });
 
     if (!errors.isEmpty()) {
       res.render("forms/type_create", {
@@ -45,9 +49,9 @@ exports.type_create_post = [
         type: type,
         errors: errors.array(),
       });
-      return
+      return;
     } else {
-      const typeExists = await Type.findOne({ name: req.body.name }).exec()
+      const typeExists = await Type.findOne({ name: req.body.name }).exec();
       if (typeExists) {
         res.redirect(typeExists.url);
       } else {
@@ -55,16 +59,42 @@ exports.type_create_post = [
         res.redirect(type.url);
       }
     }
-    
   }),
 ];
 
 exports.type_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: type delete get");
+  const [type, typeItems] = await Promise.all([
+    Type.findById(req.params.id).exec(),
+    Item.find({ type: req.params.id }, "name stock").exec(),
+  ]);
+
+  if (type === null) {
+    res.redirect("/inventory/types");
+  }
+  res.render("forms/type_delete", {
+    title: "Delete clothing type",
+    type: type,
+    typeItems: typeItems,
+  });
 });
 
 exports.type_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: type delete post");
+  const [type, typeItems] = await Promise.all([
+    Type.findById(req.params.id).exec(),
+    Item.find({ type: req.params.id }).exec(),
+  ]);
+
+  if (typeItems.length > 0) {
+    res.render("forms/type_delete", {
+      title: "Delete clothing type",
+      type: type,
+      typeItems: typeItems,
+    });
+    return
+  } else {
+    await Type.findByIdAndRemove(req.body.typeid);
+    res.redirect('/inventory/types');
+  }
 });
 
 exports.type_update_get = asyncHandler(async (req, res, next) => {

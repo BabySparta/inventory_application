@@ -101,11 +101,12 @@ exports.item_create_post = [
       }
       return true;
     }),
-    body("stock")
+  body("stock")
     .trim()
-    .notEmpty().withMessage("Stock must not be empty")
+    .notEmpty()
+    .withMessage("Stock must not be empty")
     .escape()
-    .custom(value => {
+    .custom((value) => {
       // Perform custom validation for whole number format
       const stockValue = parseInt(value, 10); // Parse the value as an integer
       if (isNaN(stockValue) || stockValue !== Math.floor(stockValue)) {
@@ -113,7 +114,7 @@ exports.item_create_post = [
       }
       return true; // Returning true means the validation passed
     }),
-  
+
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
@@ -126,7 +127,6 @@ exports.item_create_post = [
     });
 
     if (!errors.isEmpty()) {
-
       const allTypes = await Type.find({}).exec();
       res.render("forms/item_create", {
         title: "Create clothing item",
@@ -142,11 +142,17 @@ exports.item_create_post = [
 ];
 
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Item delete get");
+  const item = await Item.findById(req.params.id).exec();
+  if (item===null) {
+    res.redirect('inventory/items');
+  }
+
+  res.render('forms/item_delete', { title: "Delete clothing item", item: item })
 });
 
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Item delete post");
+  await Item.findByIdAndRemove(req.body.itemid);
+  res.redirect('/inventory/items');
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {
