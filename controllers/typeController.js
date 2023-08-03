@@ -90,17 +90,45 @@ exports.type_delete_post = asyncHandler(async (req, res, next) => {
       type: type,
       typeItems: typeItems,
     });
-    return
+    return;
   } else {
     await Type.findByIdAndRemove(req.body.typeid);
-    res.redirect('/inventory/types');
+    res.redirect("/inventory/types");
   }
 });
 
 exports.type_update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: type update get");
+  const type = Type.findById(req.params.id).exec();
+
+  if (type === null) {
+    res.redirect("/inventory/types");
+  }
+
+  res.render("forms/type_create", { title: "Update clothing type", type: type });
 });
 
-exports.type_update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: type update post");
-});
+exports.type_update_post = [
+  body("name", "Type name must be at least 1 character")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const type = new Type({ name: req.body.name, _id: req.params.id });
+
+    if (!errors.isEmpty()) {
+      res.render("forms/type_create", {
+        title: "Update clothing type",
+        type: type,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+        const updatedType = await Type.findByIdAndUpdate(req.params.id, type, {});
+        res.redirect(updatedType.url);
+      }
+    }
+  ),
+];

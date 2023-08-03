@@ -26,7 +26,7 @@ block content
           option unisex
     div 
       label(for='price') Price: 
-      input(type='number' placeholder='XX.XX' name='price' required='true' value=(undefined===item ? '' : item.price) step='0.01')     
+      input(type='number' placeholder='XX.XX' name='price' required='true' value=(undefined===item ? '' : Number(item.price)) step='0.01')     
     div 
       label(for='stock') Stock: 
       input(type='number' name='stock' required='true' value=(undefined===item ? '' : item.stock) step='1.0')

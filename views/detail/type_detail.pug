@@ -7,7 +7,7 @@ block content
 
   each item in typeItems
     div
-      h3 #[strong #{item.name}]
+      a(href=item.url) #[strong #{item.name}]
       p  Gender: #{item.gender}
       p  Price: #{item.price}
       p  Stock: #{item.stock}
@@ -15,3 +15,5 @@ block content
   hr
   p
     a(href=type.url+'/delete') Delete Type
+  p 
+    a(href=type.url+'/update') Update Type

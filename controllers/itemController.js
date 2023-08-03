@@ -143,22 +143,96 @@ exports.item_create_post = [
 
 exports.item_delete_get = asyncHandler(async (req, res, next) => {
   const item = await Item.findById(req.params.id).exec();
-  if (item===null) {
-    res.redirect('inventory/items');
+  if (item === null) {
+    res.redirect("inventory/items");
   }
 
-  res.render('forms/item_delete', { title: "Delete clothing item", item: item })
+  res.render("forms/item_delete", {
+    title: "Delete clothing item",
+    item: item,
+  });
 });
 
 exports.item_delete_post = asyncHandler(async (req, res, next) => {
   await Item.findByIdAndRemove(req.body.itemid);
-  res.redirect('/inventory/items');
+  res.redirect("/inventory/items");
 });
 
 exports.item_update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Item update get");
+  const [item, allTypes] = await Promise.all([
+    Item.findById(req.params.id).exec(),
+    Type.find({}).exec(),
+  ]);
+
+  if (item === null) {
+    res.redirect("inventory/items");
+  }
+
+  res.render("forms/item_create", {
+    title: "Update clothing item",
+    types: allTypes,
+    item: item,
+  });
 });
 
-exports.item_update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Item update post");
-});
+exports.item_update_post = [
+  // Validate and sanitize fields.
+  body("title", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
+  body("type", "Type must be selected.").trim().isLength({ min: 1 }).escape(),
+  body("gender", "Gender must be selected.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("price", "Price must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .custom((value) => {
+      const priceRegex = /^\d+(\.\d{1,2})?$/;
+      if (!priceRegex.test(value)) {
+        throw new Error(
+          "Invalid price format. Please use a valid numeric format (e.g., 10 or 10.00)."
+        );
+      }
+      return true;
+    }),
+  body("stock")
+    .trim()
+    .notEmpty()
+    .withMessage("Stock must not be empty")
+    .escape()
+    .custom((value) => {
+      const stockValue = parseInt(value, 10); 
+      if (isNaN(stockValue) || stockValue !== Math.floor(stockValue)) {
+        throw new Error("Invalid stock format. Please enter a whole number.");
+      }
+      return true;
+    }),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const item = new Item({
+      name: req.body.title,
+      gender: req.body.gender,
+      type: req.body.type,
+      price: req.body.price,
+      stock: req.body.stock,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      const allTypes = await Type.find({}).exec();
+      res.render("forms/item_create", {
+        title: "Create clothing item",
+        types: allTypes,
+        item: item,
+        errors: errors.array(),
+      });
+    } else {
+      const updatedItem = await Item.findByIdAndUpdate(req.params.id, item, {});
+      res.redirect(updatedItem.url);
+    }
+  }),
+];
+
