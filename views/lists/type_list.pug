@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+  h1= title 
+
+  ul
+    each type in typeList
+      li 
+        a(href=type.url) #{type.name}
+        
+    else 
+      li There are no clothing types defined.

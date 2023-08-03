@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  h1= title 
+
+  ul
+    each item in itemList
+      li 
+        a(href=item.url) #{item.name} | #{item.stock}
+        if (item.stock < 100) 
+          p Low Stock
+    
+    else 
+      li There are no items.

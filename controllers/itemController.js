@@ -21,14 +21,14 @@ exports.index = asyncHandler(async (req, res, next) => {
     Item.countDocuments({ gender: "male" }).exec(),
     Item.countDocuments({ gender: "female" }).exec(),
     Item.countDocuments({ gender: "unisex" }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "t_shirt"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shorts"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shirt"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "pants"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "jacket"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "dresses"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shoes"})}).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "socks"})}).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "t_shirt" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "shorts" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "shirt" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "pants" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "jacket" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "dresses" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "shoes" }) }).exec(),
+    Item.countDocuments({ type: await Type.find({ name: "socks" }) }).exec(),
   ]);
 
   res.render("index", {
@@ -44,16 +44,29 @@ exports.index = asyncHandler(async (req, res, next) => {
     jacket_clothes_count: numJackets,
     dresses_clothes_count: numDresses,
     shoes_clothes_count: numShoes,
-    socks_clothes_count: numSocks
-  })
+    socks_clothes_count: numSocks,
+  });
 });
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Item list");
+  const allItems = await Item.find({}, "name stock")
+    .sort({ name: 1 })
+    .populate("type")
+    .exec();
+  
+  res.render("lists/item_list", {title: "Item List", itemList: allItems});
 });
 
 exports.item_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: Item detail: ${req.params.id}`);
+  const item = await Item.findById(req.params.id).populate("type").exec();
+
+  if (item === null) {
+    const err = new Error("Item not found")
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("detail/item_detail", { title: item.name, item: item })
 });
 
 exports.item_create_get = asyncHandler(async (req, res, next) => {

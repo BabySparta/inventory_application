@@ -1,0 +1,13 @@
+extends ../layout
+
+block content 
+  h1= title 
+
+  h2 Clothes 
+
+  each item in typeItems
+    div
+      h3 #[strong #{item.name}]
+      p  Gender: #{item.gender}
+      p  Price: #{item.price}
+      p  Stock: #{item.stock}

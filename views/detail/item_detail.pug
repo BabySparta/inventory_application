@@ -1,0 +1,10 @@
+extends ../layout
+
+block content 
+  h1= title 
+
+  p #[strong Gender:] #{item.gender}
+  p #[strong Type:] 
+      a(href=item.type.url) #{item.type.name}
+  p #[strong Price:] #{item.price}
+  p #[strong Stock:] #{item.stock}
