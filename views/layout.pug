@@ -6,8 +6,10 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     script(src="https://code.jquery.com/jquery-3.5.1.slim.min.js", integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj", crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   body
-    include ./partials/sidebar
+    div(class='sidebar column')
+      include ./partials/sidebar
 
     div(class='content')
       block content

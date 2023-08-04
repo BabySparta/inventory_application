@@ -1,16 +1,15 @@
 block header
-  h1 Fashion Fushion Inventory
+  h1(class='side-header') 
+    span(class='orange text-outline') Fashion 
+    span(class='blue text-outline') Fusion 
+    p(class='invWrap') Inventory 
+      span(class="material-symbols-outlined invIcon") inventory_2
 
-  ul(class='sidebar-nav')
-              li
-                a(href='/inventory') Home
-              li
-                a(href='/inventory/items') All clothes
-              li
-                a(href='/inventory/types') All Cloth Types
-              li
-                hr
-              li
-                a(href='/inventory/item/create') Add new cloth
-              li
-                a(href='/inventory/type/create') Add new cloth type
+  div(class='sidebar-nav column')
+    div(class='view-nav column')
+      a(href='/inventory' class='nav-item') Home
+      a(href='/inventory/items' class='nav-item') All Clothes
+      a(href='/inventory/types' class='nav-item') All Cloth Types
+    div(class='new-nav column')
+      a(href='/inventory/item/create' class='nav-item') Add New Cloth
+      a(href='/inventory/type/create' class='nav-item') Add New Cloth Type
