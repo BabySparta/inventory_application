@@ -1,14 +1,18 @@
 extends ../layout
 
 block content
-  h1= title 
+  h1(class='page_title')= title 
 
-  ul
+  div(class='allItems')
     each item in itemList
-      li 
-        a(href=item.url) #{item.name} | #{item.stock}
-        if (item.stock < 100) 
-          p Low Stock
+      a(class='item column' href=item.url)
+        img(src="" alt="" class='itemImg')
+        div(class='column spaceBetween itemLower')
+          p(class='bold itemTxt') #{item.name}
+          div(class='text-row spaceBetween')
+            p(class='bold itemTxt') #{item.stock} items
+            if (item.stock < 100) 
+              p(class='red bold') Low Stock
     
     else 
       li There are no items.

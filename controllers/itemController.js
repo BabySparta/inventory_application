@@ -46,6 +46,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     dresses_clothes_count: numDresses,
     shoes_clothes_count: numShoes,
     socks_clothes_count: numSocks,
+    selected: true,
   });
 });
 

@@ -21,13 +21,25 @@ a {
 .orange {
   color: var(--fashionOrange);
 }
+.orange-under {
+  text-decoration:underline 2px solid var(--fashionOrange);
+  text-underline-offset: 4px;
+}
 
 .blue {
   color: var(--fashionBlue);
 }
+.blue-under {
+  text-decoration:underline 2px solid var(--fashionBlue);
+  text-underline-offset: 4px;
+}
 
 .red {
   color: var(--fashionRed);
+}
+.red-under {
+  text-decoration:underline 2px solid var(--fashionRed);
+  text-underline-offset: 4px;
 }
 
 body {
@@ -41,26 +53,47 @@ body {
   flex-direction: column;
 }
 
+.row {
+  display: flex;
+}
+
+.text-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spaceBetween {
+  justify-content: space-between;
+}
+
+.bold {
+  font-weight: bold;
+}
+
 .text-outline {
   text-shadow: -0.7px 0.7px 0 #000, 0.7px 0.7px 0 #000, 0.7px -0.7px 0 #000,
     -0.7px -0.7px 0 #000;
 }
 
+.selected {
+  background-color: var(--backgroundHover);
+}
+
 /* Sidebar */
 .sidebar {
-  width: 350px;
+  min-width: 375px;
+  max-width: 375px;
   background-color: var(--background);
   box-sizing: border-box;
   padding: 10px;
   gap: 20px;
+  box-shadow: 0px 0px 5px black;
+  z-index: 1;
 }
 
 .side-header {
   font-size: 3rem;
-}
-
-.sidebar-nav {
-  
 }
 
 .view-nav, .new-nav {
@@ -90,4 +123,61 @@ body {
 
 .material-symbols-outlined.invIcon {
   font-size: 2.5rem;
+}
+
+/* Main Body */
+.content {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: var(--background);
+  gap: 50px;
+  overflow-y: scroll;
+}
+
+.page_title {
+  font-size: 3rem;
+  text-decoration: underline 2px var(--fashionRed);
+  text-underline-offset: 4px;
+}
+
+/* Index(Home Page) */
+.items_in_stock {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-auto-rows: 150px;
+}
+
+.indexItem {
+  font-size: 2rem;
+}
+
+/* Item List */
+.allItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 300px;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.item {
+  background-color: var(--backgroundHover);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  gap: 10px;
+}
+
+.itemImg {
+  background-color: var(--fashionOrange);
+  height: 100%;
+  max-height: 225px;
+  aspect-ratio: 1/1;
+}
+
+.itemLower {
+  height: 75px;
 }

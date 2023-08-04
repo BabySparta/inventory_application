@@ -1,18 +1,18 @@
 extends layout
 
 block content
-  h1= title
+  h1(class='page_title')= title
   
   div(class='items_in_stock')
-    p #[strong Clothes:] !{clothes_count}
-    p #[strong Men's Clothes:] !{mens_clothes_count}
-    p #[strong Womens Clothes:] !{womens_clothes_count}
-    p #[strong Unisex Clothes:] !{unisex_clothes_count}
-    p #[strong T-Shirts:] !{t_shirt_clothes_count}
-    p #[strong Shorts:] !{shorts_clothes_count}
-    p #[strong Shirts:] !{shirt_clothes_count}
-    p #[strong Pants:] !{pants_clothes_count}
-    p #[strong Jackets:] !{jacket_clothes_count}
-    p #[strong Dresses:] !{dresses_clothes_count}
-    p #[strong Shoes:] !{shoes_clothes_count}
-    p #[strong Socks:] !{socks_clothes_count}
+    p(class='indexItem blue-under') #[strong Total Clothes:] !{clothes_count}
+    p(class='indexItem red-under') #[strong Men's Clothes:] !{mens_clothes_count}
+    p(class='indexItem red-under') #[strong Womens Clothes:] !{womens_clothes_count}
+    p(class='indexItem red-under') #[strong Unisex Clothes:] !{unisex_clothes_count}
+    p(class='indexItem orange-under') #[strong T-Shirts:] !{t_shirt_clothes_count}
+    p(class='indexItem orange-under') #[strong Shorts:] !{shorts_clothes_count}
+    p(class='indexItem orange-under') #[strong Shirts:] !{shirt_clothes_count}
+    p(class='indexItem orange-under') #[strong Pants:] !{pants_clothes_count}
+    p(class='indexItem orange-under') #[strong Jackets:] !{jacket_clothes_count}
+    p(class='indexItem orange-under') #[strong Dresses:] !{dresses_clothes_count}
+    p(class='indexItem orange-under') #[strong Shoes:] !{shoes_clothes_count}
+    p(class='indexItem orange-under') #[strong Socks:] !{socks_clothes_count}

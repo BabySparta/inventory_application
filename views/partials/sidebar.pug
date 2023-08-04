@@ -7,9 +7,19 @@ block header
 
   div(class='sidebar-nav column')
     div(class='view-nav column')
-      a(href='/inventory' class='nav-item') Home
-      a(href='/inventory/items' class='nav-item') All Clothes
-      a(href='/inventory/types' class='nav-item') All Cloth Types
+      a(href='/inventory' class='nav-item text-row home')
+        span(class="material-symbols-outlined") home
+        p Home
+      a(href='/inventory/items' class='nav-item text-row allClothes') 
+        span(class="material-symbols-outlined") styler
+        p All Clothes
+      a(href='/inventory/types' class='nav-item text-row allTypes') 
+        span(class="material-symbols-outlined") home_storage
+        p All Cloth Types
     div(class='new-nav column')
-      a(href='/inventory/item/create' class='nav-item') Add New Cloth
-      a(href='/inventory/type/create' class='nav-item') Add New Cloth Type
+      a(href='/inventory/item/create' class='nav-item text-row newCloth') 
+        span(class="material-symbols-outlined") add
+        p Add New Cloth
+      a(href='/inventory/type/create' class='nav-item text-row newType') 
+        span(class="material-symbols-outlined") box_add
+        p Add New Cloth Type
