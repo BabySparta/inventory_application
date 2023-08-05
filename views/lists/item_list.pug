@@ -6,7 +6,8 @@ block content
   div(class='allItems')
     each item in itemList
       a(class='item column' href=item.url)
-        img(src="" alt="" class='itemImg')
+        div(class='imageWrap')
+          img(src=`${item.image}` alt=`${item.name}` class='itemImg')
         div(class='column spaceBetween itemLower')
           p(class='bold itemTxt') #{item.name}
           div(class='text-row spaceBetween')

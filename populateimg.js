@@ -32,7 +32,7 @@ async function main() {
   setPath(socksItem, "paint_sploch_socks.jpeg");
   setPath(polkaItem, "polka_dot_shorts.jpg");
   setPath(roseItem, "rose_short_dress.jpg");
-  setPath(tatteredItem, "tattered_whute_tee.jpg");
+  setPath(tatteredItem, "tattered_white_tee.jpg");
   setPath(teddyItem, "teddy_bear_hoodie.jpeg");
   setPath(stockingsItem, "black_stockings.jpg");
   setPath(leggingsItem, "pink_leggings.jpg");

@@ -30,7 +30,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 exports.item_list = asyncHandler(async (req, res, next) => {
-  const allItems = await Item.find({}, "name stock")
+  const allItems = await Item.find({}, "name stock image")
     .sort({ name: 1 })
     .populate("type")
     .exec();
