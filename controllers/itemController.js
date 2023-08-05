@@ -5,12 +5,7 @@ const { body, validationResult } = require("express-validator");
 
 exports.index = asyncHandler(async (req, res, next) => {
   const allTypes = await Type.find().exec();
-  const [
-    numClothes,
-    numMens,
-    numWomens,
-    numUnisex,
-  ] = await Promise.all([
+  const [numClothes, numMens, numWomens, numUnisex] = await Promise.all([
     Item.countDocuments({}).exec(),
     Item.countDocuments({ gender: "male" }).exec(),
     Item.countDocuments({ gender: "female" }).exec(),
@@ -33,7 +28,6 @@ exports.index = asyncHandler(async (req, res, next) => {
     unisex_clothes_count: numUnisex,
   });
 });
-
 
 exports.item_list = asyncHandler(async (req, res, next) => {
   const allItems = await Item.find({}, "name stock")
@@ -60,7 +54,7 @@ exports.item_create_get = asyncHandler(async (req, res, next) => {
   const allTypes = await Type.find().exec();
 
   res.render("forms/item_create", {
-    title: "Create clothing item",
+    title: "Create Clothing Item",
     types: allTypes,
   });
 });
@@ -104,18 +98,24 @@ exports.item_create_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    let image;
+    if (req.file) {
+      image = `/uploads/${req.file.filename}`;
+    }
+
     const item = new Item({
       name: req.body.title,
       gender: req.body.gender,
       type: req.body.type,
       price: req.body.price,
       stock: req.body.stock,
+      image
     });
 
     if (!errors.isEmpty()) {
       const allTypes = await Type.find({}).exec();
       res.render("forms/item_create", {
-        title: "Create clothing item",
+        title: "Create Clothing Item",
         types: allTypes,
         item: item,
         errors: errors.array(),
@@ -134,7 +134,7 @@ exports.item_delete_get = asyncHandler(async (req, res, next) => {
   }
 
   res.render("forms/item_delete", {
-    title: "Delete clothing item",
+    title: "Delete Clothing Item",
     item: item,
   });
 });
@@ -155,7 +155,7 @@ exports.item_update_get = asyncHandler(async (req, res, next) => {
   }
 
   res.render("forms/item_create", {
-    title: "Update clothing item",
+    title: "Update Clothing Item",
     types: allTypes,
     item: item,
   });
@@ -188,7 +188,7 @@ exports.item_update_post = [
     .withMessage("Stock must not be empty")
     .escape()
     .custom((value) => {
-      const stockValue = parseInt(value, 10); 
+      const stockValue = parseInt(value, 10);
       if (isNaN(stockValue) || stockValue !== Math.floor(stockValue)) {
         throw new Error("Invalid stock format. Please enter a whole number.");
       }
@@ -210,7 +210,7 @@ exports.item_update_post = [
     if (!errors.isEmpty()) {
       const allTypes = await Type.find({}).exec();
       res.render("forms/item_create", {
-        title: "Create clothing item",
+        title: "Create Clothing Item",
         types: allTypes,
         item: item,
         errors: errors.array(),
@@ -221,4 +221,3 @@ exports.item_update_post = [
     }
   }),
 ];
-

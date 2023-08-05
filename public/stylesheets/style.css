@@ -208,3 +208,46 @@ body {
 }
 
 /* Forms */
+.form {
+  gap: 20px;
+  width: 70%;
+}
+
+.form-item {
+  font-size: 1.5rem;
+  background-color: var(--backgroundHover);
+  border-radius: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  transition: 0.1s ease-in-out;
+}
+
+.form-select, .form-input {
+  font-size: 1.5rem;
+  background-color: var(--backgroundHover);
+  outline: none;
+  border: none;
+}
+
+.form-item:focus {
+  border-bottom: 4px solid var(--fashionOrange);
+}
+
+.form-submit {
+  background-color: black;
+  box-shadow: 10px 10px 0px var(--fashionBlue);
+  width: fit-content;
+  padding: 5px 40px;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  align-self: center;
+  transition: 0.3s ease-in-out;
+}
+
+.form-submit:hover {
+  cursor: pointer;
+  background-color: var(--fashionBlue);
+  box-shadow: 10px 10px 0px black;
+}

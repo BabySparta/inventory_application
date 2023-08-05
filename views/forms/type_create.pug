@@ -1,13 +1,11 @@
 extends ../layout
 
 block content 
-  h1= title 
+  h1(class='page_title')= title 
 
-  form(method='POST' action='')
-    div
-      label(for='name') Type:
-      input(type='text', placeholder='T-Shirt, Sweater, etc.' name='name' value=(undefined===type ? '' : type.name) required: true)
-    button(type='submit') Submit
+  form(method='POST' action='' class='form column')
+    input(type='text', placeholder='T-Shirt, Sweater, etc.' name='name' value=(undefined===type ? '' : type.name) required='true' class='form-item form-input')
+    button(type='submit' class='form-submit') Submit
     
   if errors
     ul

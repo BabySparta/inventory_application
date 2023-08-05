@@ -10,6 +10,7 @@ const ItemSchema = new Schema({
   type: { type: Schema.Types.ObjectId, ref: "Type", required: true },
   price: { type: mongoose.Schema.Types.Decimal128, required: true },
   stock: { type: Number, required: true, min: 0 },
+  image: { type: String }
 });
 
 ItemSchema.virtual("url").get(function () {

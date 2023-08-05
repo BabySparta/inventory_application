@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const multer = require('multer');
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -21,6 +22,18 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueFilename = Date.now() + '-' + file.originalname;
+    cb(null, uniqueFilename);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
