@@ -181,3 +181,30 @@ body {
 .itemLower {
   height: 75px;
 }
+
+/* Type List */
+.type-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-auto-rows: 75px;
+  row-gap: 100px;
+  column-gap: 20px;
+}
+
+.type {
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 10px;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.type:hover {
+  background-color: var(--backgroundHover);
+}
+
+.type-txt {
+  font-size: 2rem;
+}
+
+/* Forms */

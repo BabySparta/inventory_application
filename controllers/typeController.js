@@ -6,7 +6,18 @@ const { body, validationResult } = require("express-validator");
 exports.type_list = asyncHandler(async (req, res, next) => {
   const allTypes = await Type.find({}).exec();
 
-  res.render("lists/type_list", { title: "Type List", typeList: allTypes });
+  const typeCounts = {};
+
+  for (const type of allTypes) {
+    const count = await Item.countDocuments({ type: type._id }).exec();
+    typeCounts[type.name] = count;
+  }
+
+  res.render("lists/type_list", {
+    title: "Type List",
+    allTypes: allTypes,
+    typeCounts: typeCounts,  
+  });
 });
 
 exports.type_detail = asyncHandler(async (req, res, next) => {
@@ -104,7 +115,10 @@ exports.type_update_get = asyncHandler(async (req, res, next) => {
     res.redirect("/inventory/types");
   }
 
-  res.render("forms/type_create", { title: "Update clothing type", type: type });
+  res.render("forms/type_create", {
+    title: "Update clothing type",
+    type: type,
+  });
 });
 
 exports.type_update_post = [
@@ -126,9 +140,8 @@ exports.type_update_post = [
       });
       return;
     } else {
-        const updatedType = await Type.findByIdAndUpdate(req.params.id, type, {});
-        res.redirect(updatedType.url);
-      }
+      const updatedType = await Type.findByIdAndUpdate(req.params.id, type, {});
+      res.redirect(updatedType.url);
     }
-  ),
+  }),
 ];

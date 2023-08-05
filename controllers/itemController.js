@@ -4,51 +4,36 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 exports.index = asyncHandler(async (req, res, next) => {
+  const allTypes = await Type.find().exec();
   const [
     numClothes,
     numMens,
     numWomens,
     numUnisex,
-    numTees,
-    numShorts,
-    numShirts,
-    numPants,
-    numJackets,
-    numDresses,
-    numShoes,
-    numSocks,
   ] = await Promise.all([
     Item.countDocuments({}).exec(),
     Item.countDocuments({ gender: "male" }).exec(),
     Item.countDocuments({ gender: "female" }).exec(),
     Item.countDocuments({ gender: "unisex" }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "t_shirt" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shorts" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shirt" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "pants" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "jacket" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "dresses" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "shoes" }) }).exec(),
-    Item.countDocuments({ type: await Type.find({ name: "socks" }) }).exec(),
   ]);
+
+  const typeCounts = {};
+
+  for (const type of allTypes) {
+    const count = await Item.countDocuments({ type: type._id }).exec();
+    typeCounts[type.name] = count;
+  }
 
   res.render("index", {
     title: "Total Inventory",
+    typeCounts: typeCounts,
     clothes_count: numClothes,
     mens_clothes_count: numMens,
     womens_clothes_count: numWomens,
     unisex_clothes_count: numUnisex,
-    t_shirt_clothes_count: numTees,
-    shorts_clothes_count: numShorts,
-    shirt_clothes_count: numShirts,
-    pants_clothes_count: numPants,
-    jacket_clothes_count: numJackets,
-    dresses_clothes_count: numDresses,
-    shoes_clothes_count: numShoes,
-    socks_clothes_count: numSocks,
-    selected: true,
   });
 });
+
 
 exports.item_list = asyncHandler(async (req, res, next) => {
   const allItems = await Item.find({}, "name stock")

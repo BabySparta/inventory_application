@@ -1,12 +1,14 @@
 extends ../layout
 
 block content
-  h1= title 
+  h1(class='page_title')= title 
 
-  ul
-    each type in typeList
-      li 
-        a(href=type.url) #{type.name}
+  div(class='type-list')
+    each type in allTypes
+      - const formattedType = type.name.replace(/_/g, '-').replace(/\b\w/g, char => char.toUpperCase())
+      a(href=type.url class='text-row type') 
+        p(class='type-txt bold orange-under') #{formattedType}
+        p(class='type-txt') !{typeCounts[type.name]} items
         
     else 
-      li There are no clothing types defined.
+      p There are no clothing types defined.
