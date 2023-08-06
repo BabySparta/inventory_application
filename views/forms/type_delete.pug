@@ -1,20 +1,24 @@
 extends ../layout
 
 block content
-  h1 #{title}: #{type.name}
+  - const formattedType = type.name.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
+  h1(class='page_title') #{title}: #{formattedType}
 
   if typeItems.length
 
-    p #[strong Delete the following items before attempting to delete this type.]
+    p(class='subheader') #[strong Delete the following items before attempting to delete this type:]
 
-    div(style='margin-left:20px;margin-top:20px')
-
-      h4 Items
-
-      dl
+    div(class='column' style='gap: 30px;')
       each item in typeItems
-        dt
-          a(href=item.url) #{item.name} | #{item.stock}
+        a(class='subitemWrap' href=item.url)
+          div(class='subitemImgWrap')
+            img(src=`${item.image}` alt=`${item.name}` class='subitemImg')
+          div(class='subitemContent column')
+            - const formattedItem = item.name.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
+            h3(class='subitem-header orange-under') #[strong #{formattedItem}]
+            p(class='subdetail-label')  Gender: #{item.gender}
+            p(class='subdetail-label')  Price: #{item.price}
+            p(class='subdetail-label')  Stock: #{item.stock}
 
   else
     p Do you really want to delete this type?

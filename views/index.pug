@@ -9,5 +9,5 @@ block content
     p(class='indexItem red-under') #[strong Womens Clothes:] !{womens_clothes_count}
     p(class='indexItem red-under') #[strong Unisex Clothes:] !{unisex_clothes_count}
     each type in Object.keys(typeCounts)
-      - const formattedType = type.replace(/_/g, '-').replace(/\b\w/g, char => char.toUpperCase())
+      - const formattedType = type.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
       p(class='indexItem orange-under') #[strong #{formattedType}:] !{typeCounts[type]}

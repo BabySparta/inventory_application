@@ -76,7 +76,7 @@ exports.type_create_post = [
 exports.type_delete_get = asyncHandler(async (req, res, next) => {
   const [type, typeItems] = await Promise.all([
     Type.findById(req.params.id).exec(),
-    Item.find({ type: req.params.id }, "name stock").exec(),
+    Item.find({ type: req.params.id }).exec(),
   ]);
 
   if (type === null) {

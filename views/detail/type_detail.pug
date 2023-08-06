@@ -1,19 +1,26 @@
 extends ../layout
 
 block content 
-  h1= title 
+  - const formattedTitle = title.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
+  h1(class='page_title')= formattedTitle
 
-  h2 Clothes 
+  h2(class='subheader orange-under') Clothes 
 
   each item in typeItems
-    div
-      a(href=item.url) #[strong #{item.name}]
-      p  Gender: #{item.gender}
-      p  Price: #{item.price}
-      p  Stock: #{item.stock}
+    a(class='subitemWrap' href=item.url)
+      div(class='subitemImgWrap')
+        img(src=`${item.image}` alt=`${item.name}` class='subitemImg')
+      div(class='subitemContent column')
+        - const formattedItem = item.name.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
+        h3(class='subitem-header orange-under') #[strong #{formattedItem}]
+        p(class='subdetail-label')  Gender: #{item.gender}
+        p(class='subdetail-label')  Price: #{item.price}
+        p(class='subdetail-label')  Stock: #{item.stock}
   
   hr
-  p
-    a(href=type.url+'/delete') Delete Type
-  p 
-    a(href=type.url+'/update') Update Type
+  div(class='text-row')
+    span(class="material-symbols-outlined") delete
+    a(href=type.url+'/delete' class='detail-link') Delete Item
+  div(class='text-row')
+    span(class="material-symbols-outlined") update
+    a(href=type.url+'/update' class='detail-link') Update Item

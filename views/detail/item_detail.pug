@@ -1,15 +1,21 @@
 extends ../layout
 
-block content 
-  h1= title 
+block content
+  - const formattedTitle = title.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
+  h1(class='page_title')= formattedTitle
 
-  p #[strong Gender:] #{item.gender}
-  p #[strong Type:] 
-      a(href=item.type.url) #{item.type.name}
-  p #[strong Price:] #{item.price}
-  p #[strong Stock:] #{item.stock}
+  div(class='detail-wrap')
+    img(src=`${item.image}` alt=`${item.name}` class='detailImg')
+    div(class='detailBody column')
+      p(class='detail-label') #[strong Gender:] #{item.gender}
+      p(class='detail-label') #[strong Type:] 
+          a(href=item.type.url class='orange-under') #{item.type.name}
+      p(class='detail-label') #[strong Price:] $#{item.price}
+      p(class='detail-label') #[strong Stock:] #{item.stock} items
   hr
-  p
-    a(href=item.url+'/delete') Delete Item
-  p
-    a(href=item.url+'/update') Update Item
+  div(class='text-row')
+    span(class="material-symbols-outlined") delete
+    a(href=item.url+'/delete' class='detail-link') Delete Item
+  div(class='text-row')
+    span(class="material-symbols-outlined") update
+    a(href=item.url+'/update' class='detail-link') Update Item
