@@ -5,14 +5,17 @@ block content
 
   form(method='POST' action='' class='form column' enctype="multipart/form-data")
     input(type='text', placeholder='Name...' name='title' required='true' value=(undefined===item ? '' : item.name) class='form-input form-item')
-    input(type='file' name='image' class='form-input form-item')
+    div(class='form-item')
+      input(type='file' name='image' class='form-input')
+      if item 
+        label(for='usePrev') Use Previous(#{item.image})
+        input(type='checkbox' name='usePrev' onchange='handleUsePrevChange(this.checked)' value=item.image)
     div(class='form-item column') 
       select(type='select', placeholder='Select Type' name='type' required='true' class='form-select')
         for type in types
-          if item 
-            option(value=type.id selected=(type._id.toString()===item.type._id.toString() ? 'selected' : false)) #{type.name}
-          else 
-            option(value=type.id) #{type.name}
+          - const isSelected = item && item.type ? item.type._id.toString() === type._id.toString() : false
+          option(value=type._id selected=isSelected) #{type.name}
+
     div(class='form-item column') 
       select(type='select', placeholder='Select Gender' name='gender' required='true' class='form-select')
         if item 
@@ -31,3 +34,14 @@ block content
     ul
       for error in errors
         li!= error.msg
+
+  script.
+    function handleUsePrevChange(checked) {
+      const fileInput = document.querySelector('input[type="file"]');
+      if (checked) {
+        fileInput.value = '';
+        fileInput.setAttribute('disabled', 'disabled');
+      } else {
+        fileInput.removeAttribute('disabled');
+      }
+    }

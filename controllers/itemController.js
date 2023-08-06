@@ -101,6 +101,10 @@ exports.item_create_post = [
     let image;
     if (req.file) {
       image = `/uploads/${req.file.filename}`;
+    } else if (req.body.usePrev === 'on') {
+      image = req.body.image;
+    } else {
+      image = '/uploads/placeholder.png'
     }
 
     const item = new Item({
@@ -198,6 +202,15 @@ exports.item_update_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    let image;
+    if (req.file) {
+      image = `/uploads/${req.file.filename}`;
+    } else if (req.body.usePrev === 'on') {
+      image = req.body.image;
+    } else {
+      image = '/uploads/placeholder.png'
+    }
+
     const item = new Item({
       name: req.body.title,
       gender: req.body.gender,
@@ -205,6 +218,7 @@ exports.item_update_post = [
       price: req.body.price,
       stock: req.body.stock,
       _id: req.params.id,
+      image,
     });
 
     if (!errors.isEmpty()) {
