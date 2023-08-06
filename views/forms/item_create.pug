@@ -4,20 +4,20 @@ block content
   h1(class='page_title')= title 
 
   form(method='POST' action='' class='form column' enctype="multipart/form-data")
-    input(type='text', placeholder='Name...' name='title' required='true' value=(undefined===item ? '' : item.name) class='form-input form-item')
+    input(type='text', placeholder='Name...' name='title' value=(undefined===item ? '' : item.name) class='form-input form-item')
     div(class='form-item')
       input(type='file' name='image' class='form-input')
       if item 
         label(for='usePrev') Use Previous(#{item.image})
         input(type='checkbox' name='usePrev' onchange='handleUsePrevChange(this.checked)' value=item.image)
     div(class='form-item column') 
-      select(type='select', placeholder='Select Type' name='type' required='true' class='form-select')
+      select(type='select', placeholder='Select Type' name='type' class='form-select')
         for type in types
           - const isSelected = item && item.type ? item.type._id.toString() === type._id.toString() : false
           option(value=type._id selected=isSelected) #{type.name}
 
     div(class='form-item column') 
-      select(type='select', placeholder='Select Gender' name='gender' required='true' class='form-select')
+      select(type='select', placeholder='Select Gender' name='gender' class='form-select')
         if item 
           option(selected=(item.gender==='male' ? 'selected' : false)) male
           option(selected=(item.gender==='female' ? 'selected' : false)) female
@@ -26,8 +26,8 @@ block content
           option male
           option female
           option unisex
-    input(type='number' placeholder='Price (XX.XX)' name='price' required='true' value=(undefined===item ? '' : Number(item.price)) step='0.01' class='form-input form-item')     
-    input(type='number' name='stock' placeholder="Stock..." required='true' value=(undefined===item ? '' : item.stock) step='1.0' class='form-input form-item')
+    input(type='number' placeholder='Price (XX.XX)' name='price' value=(undefined===item ? '' : Number(item.price)) step='0.01' class='form-input form-item')     
+    input(type='number' name='stock' placeholder="Stock..." value=(undefined===item ? '' : item.stock) step='1.0' class='form-input form-item')
     button(type='submit' class='form-submit') Submit
     
   if errors

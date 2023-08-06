@@ -61,50 +61,21 @@ exports.item_create_get = asyncHandler(async (req, res, next) => {
 
 exports.item_create_post = [
   // Validate and sanitize fields.
-  body("title", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
-  body("type", "Type must be selected.").trim().isLength({ min: 1 }).escape(),
-  body("gender", "Gender must be selected.")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body("price", "Price must not be empty")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .custom((value) => {
-      // Perform custom validation for price format
-      const priceRegex = /^\d+(\.\d{1,2})?$/;
-      if (!priceRegex.test(value)) {
-        throw new Error(
-          "Invalid price format. Please use a valid numeric format (e.g., 10 or 10.00)."
-        );
-      }
-      return true;
-    }),
-  body("stock")
-    .trim()
-    .notEmpty()
-    .withMessage("Stock must not be empty")
-    .escape()
-    .custom((value) => {
-      // Perform custom validation for whole number format
-      const stockValue = parseInt(value, 10); // Parse the value as an integer
-      if (isNaN(stockValue) || stockValue !== Math.floor(stockValue)) {
-        throw new Error("Invalid stock format. Please enter a whole number.");
-      }
-      return true; // Returning true means the validation passed
-    }),
+  body("title", "Name must not be empty.").trim().not().isEmpty().escape(),
+  body("type", "Type must be selected.").trim().not().isEmpty().escape(),
+  body("gender", "Gender must be selected.").trim().not().isEmpty().escape(),
+  body("price", "Price must not be empty").trim().isFloat({ min: 0 }).toFloat(),
+  body("stock").isInt({ min: 0 }).toInt(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-
     let image;
     if (req.file) {
       image = `/uploads/${req.file.filename}`;
-    } else if (req.body.usePrev === 'on') {
+    } else if (req.body.usePrev === "on") {
       image = req.body.image;
     } else {
-      image = '/uploads/placeholder.png'
+      image = "/uploads/placeholder.png";
     }
 
     const item = new Item({
@@ -113,8 +84,10 @@ exports.item_create_post = [
       type: req.body.type,
       price: req.body.price,
       stock: req.body.stock,
-      image
+      image,
     });
+
+    console.log(req.body)
 
     if (!errors.isEmpty()) {
       const allTypes = await Type.find({}).exec();
@@ -167,37 +140,11 @@ exports.item_update_get = asyncHandler(async (req, res, next) => {
 
 exports.item_update_post = [
   // Validate and sanitize fields.
-  body("title", "Name must not be empty.").trim().isLength({ min: 1 }).escape(),
-  body("type", "Type must be selected.").trim().isLength({ min: 1 }).escape(),
-  body("gender", "Gender must be selected.")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body("price", "Price must not be empty")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .custom((value) => {
-      const priceRegex = /^\d+(\.\d{1,2})?$/;
-      if (!priceRegex.test(value)) {
-        throw new Error(
-          "Invalid price format. Please use a valid numeric format (e.g., 10 or 10.00)."
-        );
-      }
-      return true;
-    }),
-  body("stock")
-    .trim()
-    .notEmpty()
-    .withMessage("Stock must not be empty")
-    .escape()
-    .custom((value) => {
-      const stockValue = parseInt(value, 10);
-      if (isNaN(stockValue) || stockValue !== Math.floor(stockValue)) {
-        throw new Error("Invalid stock format. Please enter a whole number.");
-      }
-      return true;
-    }),
+  body("title", "Name must not be empty.").trim().not().isEmpty().escape(),
+  body("type", "Type must be selected.").trim().not().isEmpty().escape(),
+  body("gender", "Gender must be selected.").trim().not().isEmpty().escape(),
+  body("price", "Price must not be empty").trim().isFloat({ min: 0 }).toFloat(),
+  body("stock").isInt({ min: 0 }).toInt(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -205,10 +152,10 @@ exports.item_update_post = [
     let image;
     if (req.file) {
       image = `/uploads/${req.file.filename}`;
-    } else if (req.body.usePrev === 'on') {
-      image = req.body.image;
+    } else if (req.body.usePrev === "on") {
+      image = req.body.usePrev;
     } else {
-      image = '/uploads/placeholder.png'
+      image = "/uploads/placeholder.png";
     }
 
     const item = new Item({
@@ -224,7 +171,7 @@ exports.item_update_post = [
     if (!errors.isEmpty()) {
       const allTypes = await Type.find({}).exec();
       res.render("forms/item_create", {
-        title: "Create Clothing Item",
+        title: "Update Clothing Item",
         types: allTypes,
         item: item,
         errors: errors.array(),
