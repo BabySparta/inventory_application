@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   - const formattedTitle = title.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
-  h1(class='page_title')= formattedTitle
+  h1(class='page_title')!= formattedTitle
 
   div(class='detail-wrap')
     img(src=`${item.image}` alt=`${item.name}` class='detailImg')
@@ -15,7 +15,36 @@ block content
   hr
   div(class='text-row')
     span(class="material-symbols-outlined") delete
-    a(href=item.url+'/delete' class='detail-link') Delete Item
+    a(href=`${item.url}/delete` class='detail-link' onclick='promptForAdminPassword(this.href)') Delete Item
+
   div(class='text-row')
     span(class="material-symbols-outlined") update
-    a(href=item.url+'/update' class='detail-link') Update Item
+    a(href=`${item.url}/update` class='detail-link' onclick='promptForAdminPassword(this.href)') Update Item
+
+
+  script.
+    async function promptForAdminPassword(actionUrl) {
+      event.preventDefault();
+      const password = prompt("Please enter the admin password:");
+
+      if (password) {
+        console.log(actionUrl)
+        const response = await fetch('/api/checkAdminPassword', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+
+        if (data.isValidPassword) {
+          window.location.href = actionUrl;
+        } else {
+          alert("Invalid admin password!");
+        }
+      }
+    }
+
+

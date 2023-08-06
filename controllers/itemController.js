@@ -150,9 +150,10 @@ exports.item_update_post = [
     const errors = validationResult(req);
 
     let image;
+    console.log(req.body);
     if (req.file) {
       image = `/uploads/${req.file.filename}`;
-    } else if (req.body.usePrev === "on") {
+    } else if (req.body.usePrev) {
       image = req.body.usePrev;
     } else {
       image = "/uploads/placeholder.png";

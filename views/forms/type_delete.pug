@@ -21,10 +21,10 @@ block content
             p(class='subdetail-label')  Stock: #{item.stock}
 
   else
-    p Do you really want to delete this type?
+    p(class='subheader') Do you really want to delete this type?
 
     form(method='POST' action='')
       div
         input(type='hidden',name='typeid', required='true', value=type._id )
 
-      button(type='submit') Delete
+      button(type='submit' class='delete form-submit') Delete

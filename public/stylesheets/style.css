@@ -266,6 +266,16 @@ body {
   box-shadow: 10px 10px 0px black;
 }
 
+.form-submit.delete {
+  box-shadow: 10px 10px 0px var(--fashionRed);
+}
+
+.form-submit.delete:hover {
+  cursor: pointer;
+  background-color: var(--fashionRed);
+  box-shadow: 10px 10px 0px black;
+}
+
 /* Detail */
 .detail-wrap {
   gap: 30px;

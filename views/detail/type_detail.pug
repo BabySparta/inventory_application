@@ -20,7 +20,34 @@ block content
   hr
   div(class='text-row')
     span(class="material-symbols-outlined") delete
-    a(href=type.url+'/delete' class='detail-link') Delete Item
+    a(href=`${type.url}/delete` class='detail-link' onclick='promptForAdminPassword(this.href)') Delete Item
+
   div(class='text-row')
     span(class="material-symbols-outlined") update
-    a(href=type.url+'/update' class='detail-link') Update Item
+    a(href=`${type.url}/update` class='detail-link' onclick='promptForAdminPassword(this.href)') Update Item
+
+  
+  script.
+    async function promptForAdminPassword(actionUrl) {
+      event.preventDefault();
+      const password = prompt("Please enter the admin password:");
+
+      if (password) {
+        console.log(actionUrl)
+        const response = await fetch('/api/checkAdminPassword', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ password })
+        });
+
+        const data = await response.json();
+
+        if (data.isValidPassword) {
+          window.location.href = actionUrl;
+        } else {
+          alert("Invalid admin password!");
+        }
+      }
+    }

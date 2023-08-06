@@ -50,6 +50,15 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/inventory", inventoryRouter);
 
+app.post('/api/checkAdminPassword', (req, res) => {
+  const enteredPassword = req.body.password;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  const isValidPassword = (enteredPassword === adminPassword);
+
+  res.json({ isValidPassword });
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
