@@ -5,10 +5,3 @@
   # Set the output directory where the build artifacts are stored.
   publish = "public"  # Replace with your actual output directory (e.g., "build", "public")
 
-[[plugins]]
-  # If you're using Node.js, add the "netlify-plugin-nodejs" plugin to ensure Node.js is installed and used during the build process.
-  package = "@netlify/plugin-nodejs"
-
-[[plugins]]
-  # If your Express app uses environment variables, add the "netlify-plugin-inline-env" plugin to inline them during the build process.
-  package = "@netlify/plugin-inline-env"
