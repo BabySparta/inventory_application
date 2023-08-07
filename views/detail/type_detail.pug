@@ -2,7 +2,7 @@ extends ../layout
 
 block content 
   - const formattedTitle = title.replace(/_/g, '-').replace(/\b\w+(?:'\w+)?/g, char => char.charAt(0).toUpperCase() + char.slice(1))
-  h1(class='page_title')= formattedTitle
+  h1(class='page_title')!= formattedTitle
 
   h2(class='subheader orange-under') Clothes 
 

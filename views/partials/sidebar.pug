@@ -1,25 +1,28 @@
 block header
   h1(class='side-header') 
-    span(class='orange text-outline') Fashion 
-    span(class='blue text-outline') Fusion 
-    p(class='invWrap') Inventory 
+    span(class='orange text-outline' id='nav-label') Fashion 
+    span(class='orange text-outline' id='collapsed') F 
+    span(class='blue text-outline' id='nav-label') Fusion 
+    span(class='blue text-outline' id='collapsed') F 
+    p(class='invWrap' id='collapsed') I
+    p(class='invWrap' id='nav-label') Inventory 
       span(class="material-symbols-outlined invIcon") inventory_2
-
-  div(class='sidebar-nav column')
+  
+  div(class='sidebar-nav column' id='view-nav')
     div(class='view-nav column')
       a(href='/inventory' class='nav-item text-row home')
         span(class="material-symbols-outlined") home
-        p Home
+        p(id='nav-label') Home
       a(href='/inventory/items' class='nav-item text-row allClothes') 
         span(class="material-symbols-outlined") styler
-        p All Clothes
+        p(id='nav-label') All Clothes
       a(href='/inventory/types' class='nav-item text-row allTypes') 
         span(class="material-symbols-outlined") home_storage
-        p All Cloth Types
+        p(id='nav-label') All Cloth Types
     div(class='new-nav column')
       a(href='/inventory/item/create' class='nav-item text-row newCloth') 
         span(class="material-symbols-outlined") add
-        p Add New Cloth
+        p(id='nav-label') Add New Cloth
       a(href='/inventory/type/create' class='nav-item text-row newType') 
         span(class="material-symbols-outlined") box_add
-        p Add New Cloth Type
+        p(id='nav-label') Add New Cloth Type

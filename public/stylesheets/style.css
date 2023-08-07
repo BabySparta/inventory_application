@@ -133,6 +133,33 @@ body {
   font-size: 2.5rem;
 }
 
+#collapsed {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  
+  .sidebar, .nav-item {
+    min-width: unset;
+    width: fit-content;
+  }
+  
+  .side-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  #nav-label {
+    display: none;
+  }
+
+  #collapsed {
+    display: block;
+    text-align: center;
+  }
+}
+
 /* Main Body */
 .content {
   width: 100%;
@@ -160,6 +187,12 @@ body {
 
 .indexItem {
   font-size: 2rem;
+}
+
+@media (max-width: 800px) {
+  .items_in_stock {
+    grid-auto-rows: 100px;
+  }
 }
 
 /* Item List */
@@ -221,6 +254,16 @@ body {
   font-size: 2rem;
 }
 
+@media (max-width: 800px) {
+  .type-list {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 300px))
+  }
+
+  .page_title {
+    font-size: 1.7rem;
+  }
+}
+
 /* Forms */
 .form {
   gap: 20px;
@@ -276,6 +319,31 @@ body {
   box-shadow: 10px 10px 0px black;
 }
 
+.file-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.form-label {
+  font-size: 1.5rem;
+  background-color: transparent;
+}
+
+.checkbox {
+  margin: 10px;
+}
+
+@media (max-width: 800px) {
+  .form {
+    width: 90%;
+  }
+
+  .form-label {
+    font-size: 1.2rem;
+  }
+}
+
 /* Detail */
 .detail-wrap {
   gap: 30px;
@@ -328,4 +396,28 @@ body {
   font-size: 2rem;
   text-decoration: underline 2px solid var(--fashionRed);
   text-underline-offset: 4px;
+}
+
+@media (max-width: 800px) {
+  .subitemWrap {
+    flex-direction: column;
+  }
+
+  .detail-wrap {
+    flex-direction: column;
+  }
+
+  .detailImg {
+    width: 80%;
+  }
+
+  .subitemImgWrap {
+    max-width: unset;
+    max-height: unset;
+    width: 80%;
+  }
+
+  .subheader, .type-txt, .indexItem {
+    font-size: 1.3rem;
+  }
 }

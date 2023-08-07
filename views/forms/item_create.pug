@@ -6,10 +6,10 @@ block content
   form(method='POST' action='' class='form column' enctype="multipart/form-data")
     input(type='text', placeholder='Name...' name='title' value=(undefined===item ? '' : item.name) class='form-input form-item')
     div(class='form-item')
-      input(type='file' name='image' class='form-input')
+      input(type='file' name='image' class='file-input')
       if item 
-        label(for='usePrev') Use Previous(#{item.image})
-        input(type='checkbox' name='usePrev' onchange='handleUsePrevChange(this.checked)' value=item.image)
+        label(for='usePrev' class='form-label') Use Previous Image
+        input(type='checkbox' name='usePrev' onchange='handleUsePrevChange(this.checked)' value=item.image class='checkbox')
     div(class='form-item column') 
       select(type='select', placeholder='Select Type' name='type' class='form-select')
         for type in types
