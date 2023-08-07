@@ -25,6 +25,6 @@ Check out Fashion Fusion Here: [Fashion Fusion](https://babysparta.github.io/sho
 
 ## Screenshots
 
-![Home Page](images/HomePage.png)
-![Item Detail Page](images/ItemDetail.png)
-![Mobile View](images/MobileView.png)
+![Home Page](public/images/HomePage.png)
+![Item Detail Page](public/images/ItemDetail.png)
+![Mobile View](public/images/MobileView.png)
