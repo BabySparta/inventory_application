@@ -1,7 +1,0 @@
-[build]
-  # Set the command to build your Express app. This command will run when the app is deployed.
-  command = "npm start"  # Replace with your actual build command
-
-  # Set the output directory where the build artifacts are stored.
-  publish = "public"  # Replace with your actual output directory (e.g., "build", "public")
-
